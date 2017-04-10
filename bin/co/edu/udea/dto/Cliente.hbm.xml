@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 9/04/2017 05:16:51 PM by Hibernate Tools 3.5.0.Final -->
+<!-- Archivo de mapeo para el dto de Cliente -->
+<hibernate-mapping>
+    <class name="co.edu.udea.dto.Cliente" table="clientes">
+    
+        <id name="cedula" type="java.lang.String"> 
+            <column name="CEDULA"  length="15"/> 
+            <generator class="assigned" />
+        </id>
+        
+        <property name="nombres" type="java.lang.String">
+        	<column name="NOMBRES" length="30" not-null="true" /> 
+        </property>
+        
+         <property name="apellidos" type="java.lang.String">
+            <column name="APELLIDOS" length="30" not-null="true" />
+        </property>
+        
+        <property name="email" type="java.lang.String">
+            <column name="EMAIL" length="120" not-null="true" />
+        </property>
+        
+         <many-to-one class="co.edu.udea.dto.Usuario" name="usuarioCrea">
+            <column name="USUARIOCREA" length="15" not-null="true" />
+        </many-to-one >
+        
+        <property name="fechaCreacion" type="java.util.Date">
+            <column name="FECHACREACION" not-null="true" />
+        </property>
+        
+		<many-to-one class="co.edu.udea.dto.Usuario" name="usuarioModifica">
+            <column name="USUARIOMODIFICA" length="15" />
+        </many-to-one >
+        
+       <property name="fechaModificacion" type="java.util.Date">
+            <column name="FECHAMODIFICACION" />
+       </property>
+       
+      	 <property name="eliminado" type="java.lang.Boolean">
+            <column name="ELIMINADO" />
+        </property>
+              
+		<many-to-one class="co.edu.udea.dto.Usuario" name="usuarioElimina">
+            <column name="USUARIOELIMINA" length="15" />
+        </many-to-one >
+        
+         <property name="fechaEliminacion" type="java.util.Date">
+            <column name="FECHAELIMINACION" />
+        </property>
+        
+        <!-- Mapeo Maestro - Detalle -->
+        <set name="direcciones">
+        	<key column="Cliente"/>
+        	<one-to-many class="co.edu.udea.dto.Direccion"/>
+        </set>
+    </class>
+</hibernate-mapping>

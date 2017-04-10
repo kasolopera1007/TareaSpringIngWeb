@@ -1,0 +1,40 @@
+<!-- 
+ * Author: Oscar Camilo Lopera Lopera 1.152.439.790
+ * Ingenieria Web
+ * XML Direccion
+-->
+
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- Archivo de mapeo generado por Eclipse para el pojo de Direccion-->
+<hibernate-mapping>
+    <class name="co.edu.udea.dto.Direccion" table="direcciones">
+    
+        <composite-id name="id" class="co.edu.udea.dto.DireccionId">
+    		<key-property name="codigo" type="java.lang.Long">
+    			<column name="CODIGO"></column>
+    		</key-property>
+			<key-many-to-one name="cliente" class="co.edu.udea.dto.Cliente">
+				<column name="CLIENTE"></column>
+			</key-many-to-one>
+    	</composite-id>
+     
+        <property name="direccion" type="java.lang.String">
+            <column name="DIRECCION" length="120" not-null="true" /> 
+        </property>
+        
+        <property name="telefono" type="java.lang.String">
+            <column name="CODIGOAREA" length="45" not-null="true" />
+        </property>
+        
+        <many-to-one class="co.edu.udea.dto.Ciudad" name="ciudad">
+            <column name="CIUDAD" length="12" not-null="true" />
+        </many-to-one >         
+        
+      	 <property name="preferida" type="java.lang.Boolean">
+            <column name="PREFERIDA" />
+        </property>
+    </class>
+</hibernate-mapping>

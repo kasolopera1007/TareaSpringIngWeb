@@ -1,0 +1,60 @@
+<!-- 
+ * Author: Oscar Camilo Lopera Lopera 1.152.439.790
+ * Ingenieria Web
+ * XML Configuracion de Spring
+-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Archivo de configuración de Spring -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="DataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/ejemploclase"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value=""></property>
+	</bean>
+	
+	
+	<bean id="SessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="DataSource"></property>
+		<property name="mappingResources">
+			<list>
+				<value>co/edu/udea/dto/Ciudad.hbm.xml</value>
+				<value>co/edu/udea/dto/Rol.hbm.xml</value>
+				<value>co/edu/udea/dto/Usuario.hbm.xml</value>
+				<value>co/edu/udea/dto/Cliente.hbm.xml</value>
+				<value>co/edu/udea/dto/Direccion.hbm.xml</value>
+			</list>
+		</property> 
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop> <!-- Se debe colocar 'False' cuando se pasa a producción(para que no consuma recursos) -->
+				<prop key="javax.persistence,validation.model">none</prop><!-- Decirle a hibernate que la validación va a ser por defecto -->
+				
+			</props>
+		</property>
+	</bean>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="SessionFactory"></property>
+		<property name="dataSource" ref="DataSource"></property>
+	</bean>
+	
+	<bean name="ciudadDAO" class="co.edu.udea.dao.imp.CiudadDAOImp">
+		<property name="sessionFactory" ref="SessionFactory"></property>
+	</bean>
+	
+	<bean name="usuarioDAO" class="co.edu.udea.dao.imp.UsuarioDAOImp">
+		<property name="sessionFactory" ref="SessionFactory"></property>
+	</bean>
+	
+	<bean name="clienteDAO" class="co.edu.udea.dao.imp.ClienteDAOImp">
+		<property name="sessionFactory" ref="SessionFactory"></property>
+	</bean>
+
+</beans>
